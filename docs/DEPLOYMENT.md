@@ -8,7 +8,7 @@ GitHub Pages uses `.github/workflows/pages.yml`. It runs checks and builds with 
 
 ## Firebase
 
-Project: `parperly`; web app: Paperly Web. Email/password and Google providers enabled. Authorized deployment domain: `usmanarif60180-cyber.github.io`. Existing Firebase default domains remain unchanged. No billing plan upgrade, storage bucket, Firestore database or service-account key was provisioned by this release.
+Project: `parperly`; web app: Paperly Web. Email/password and Google providers enabled. Authorized deployment domains: `usmanarif60180-cyber.github.io`, `parperly.com`, and `www.parperly.com`. Existing Firebase default domains remain unchanged. No billing plan upgrade, storage bucket, Firestore database or service-account key was provisioned by this release.
 
 Before enabling cloud document operations, create Firestore/private storage in the chosen region, deploy and emulator-test the deny-all rules, configure a least-privilege server identity via workload identity or an appropriately secured credential, and test API ownership checks separately (Admin SDK bypasses rules).
 
@@ -21,3 +21,7 @@ Use `.env.example` as a template; keep real credentials outside Git. GCS signing
 ## OVH and custom domain
 
 The user owns `parperly.com` and reports an OVH VPS. SSH hostname, username, port and configured key access have been requested. Do not change DNS, provision billing or overwrite existing VPS services before inspecting their current state. When domain connection is requested, update GitHub Pages custom-domain settings/DNS, siteUrl/basePath, HTTPS and Firebase OAuth domain allowlist together. Building for a root custom domain uses an empty NEXT_PUBLIC_BASE_PATH; continuing to use /parperly would break asset URLs.
+
+### Custom domain connection — 20 November 2026
+
+GitHub Pages custom domain is `parperly.com`. OVH apex A and AAAA records point to the four official GitHub Pages addresses in each family. `www` is a CNAME to `usmanarif60180-cyber.github.io`. Existing MX, SPF, nameservers and DNSSEC were preserved. The conflicting default www A/AAAA and welcome TXT records were replaced. Firebase authorizes both new domains. Deployment 44783007886 passed all checks. Certificate issuance and HTTPS enforcement must be verified separately after DNS propagation.

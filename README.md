@@ -32,4 +32,4 @@ Open http://127.0.0.1:8766. Run `npm test`, `npm run typecheck`, `npm run typech
 
 ## Deployment
 
-Push to main to run the pinned GitHub Pages workflow. The current public URL is https://usmanarif60180-cyber.github.io/parperly/. `parperly.com` is not connected yet. Backend deployment requires VPS access, private storage/Redis, server identity and further integration/security tests. No payment provider or paid plans are enabled.
+Push to main to run the pinned GitHub Pages workflow. The custom domain is https://parperly.com/. The root-domain build uses an empty NEXT_PUBLIC_BASE_PATH. Backend deployment requires VPS access, private storage/Redis, server identity and further integration/security tests. No payment provider or paid plans are enabled.
