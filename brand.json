@@ -1,0 +1,9 @@
+{
+  "name": "Paperly",
+  "wordmark": "PAPERLY",
+  "tagline": {"en": "Your documents. Clearly handled.", "fr": "Vos documents, en toute clarté."},
+  "colors": {"primary": "#047857", "ink": "#0F172A", "background": "#FFFFFF", "surface": "#F8FAFC"},
+  "siteUrl": null,
+  "supportEmail": null,
+  "legalEntity": null
+}
