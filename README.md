@@ -1,9 +1,35 @@
-# Local interactive preview
+# Paperly
 
-This isolated browser prototype is an interim preview, not a replacement for the proposed Next.js/API architecture. The host has no Node/npm on PATH; the preview therefore uses plain HTML/CSS/JavaScript served by Python. No infrastructure or production deployment has been created.
+A Next.js PDF workspace with Firebase accounts and real local PDF processing.
 
-It provides a searchable 44-tool directory and local merge, extraction and rotation using vendored pdf-lib 1.17.1 (MIT; licence included). Other tools explain their unavailable state. Files are processed in browser memory and not uploaded. No accounts or payment integration exists. This prototype does not preserve every advanced PDF construct; digitally signed, encrypted and complex form documents require additional support/testing. Input limits: 20 MB total and 200 pages total. Not a hardened processing sandbox.
+**Current scope:** 31 local tool workflows, 44 dedicated tool routes, PDF.js viewer, additive editor, forms, ZIP downloads and reusable local workflows. This is not yet the complete production SaaS. Thirteen advanced workflows remain unavailable; every tool page states its current limits.
 
-Run from the repository root: `python3 -m http.server 8765 --bind 127.0.0.1` then open http://127.0.0.1:8765. No installation required. Browser PDF rendering uses the browser's built-in viewer in this prototype; PDF.js remains planned for the production frontend.
+## Run locally
 
-The newer brief adds Drive/Dropbox integrations, a truthful desktop page, richer merge/editor settings and text-based renaming. These remain planned alongside all prior scope. Paperly remains the configurable current brand; the newer brief allows changing it. Backend, billing, OCR/conversion engines and broad production acceptance remain outstanding.
+Requires Node >=24.12.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open http://127.0.0.1:8766. Run `npm test`, `npm run typecheck`, `npm run typecheck:server`, and `npm audit --omit=dev` before releasing. `npm run fixtures` regenerates synthetic test PDFs.
+
+## Structure
+
+- `apps/web`: Next.js frontend, statically exported to GitHub Pages
+- `apps/api`: in-development Firebase-verified API (disabled by default)
+- `apps/worker-node`: in-development queued processing and cleanup
+- `packages/pdf-core`: shared PDF processing engine
+- `packages/tool-registry`: actual capability registry
+- `packages/config`: brand and public Firebase config
+- `packages/i18n`: English/French dictionaries (full French coverage pending)
+- `firebase`: deny-all rules for future private cloud storage
+- `tests`: synthetic fixtures, processing/policy tests and optional real-auth smoke test
+- `legacy-preview`: original static preview retained for reference
+
+[Feature matrix](docs/FEATURE-MATRIX.md) · [Release evidence](docs/RELEASE-REPORT.md) · [Setup and deployment](docs/DEPLOYMENT.md) · [Architecture](docs/ARCHITECTURE.md) · [Licences](docs/LICENCES.md)
+
+## Deployment
+
+Push to main to run the pinned GitHub Pages workflow. The current public URL is https://usmanarif60180-cyber.github.io/parperly/. `parperly.com` is not connected yet. Backend deployment requires VPS access, private storage/Redis, server identity and further integration/security tests. No payment provider or paid plans are enabled.

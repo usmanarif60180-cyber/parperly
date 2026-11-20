@@ -1,0 +1,442 @@
+[
+  {
+    "name": "PDF Editor",
+    "id": "pdf-editor",
+    "category": "Edit & sign",
+    "fr": "Éditeur PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Add text, images, shapes and annotations."
+  },
+  {
+    "name": "Fill & Sign",
+    "id": "fill-sign",
+    "category": "Edit & sign",
+    "fr": "Remplir et signer",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Fill existing fields or place your signature."
+  },
+  {
+    "name": "Create PDF Forms",
+    "id": "create-pdf-forms",
+    "category": "Edit & sign",
+    "fr": "Créer des formulaires",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Remove Annotations",
+    "id": "remove-annotations",
+    "category": "Edit & sign",
+    "fr": "Supprimer les annotations",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Merge PDF",
+    "id": "merge-pdf",
+    "category": "Organize",
+    "fr": "Fusionner PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Combine your documents in the order you choose."
+  },
+  {
+    "name": "Alternate & Mix PDF",
+    "id": "alternate-mix-pdf",
+    "category": "Organize",
+    "fr": "Alterner et mélanger",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Organize PDF",
+    "id": "organize-pdf",
+    "category": "Organize",
+    "fr": "Organiser PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Delete PDF Pages",
+    "id": "delete-pdf-pages",
+    "category": "Organize",
+    "fr": "Supprimer des pages",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Extract PDF Pages",
+    "id": "extract-pdf-pages",
+    "category": "Organize",
+    "fr": "Extraire des pages",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Split by Pages",
+    "id": "split-by-pages",
+    "category": "Split",
+    "fr": "Diviser par pages",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Divide a document into individual pages or groups."
+  },
+  {
+    "name": "Split by Bookmarks",
+    "id": "split-by-bookmarks",
+    "category": "Split",
+    "fr": "Diviser par signets",
+    "available": false,
+    "reason": "Bookmark destination resolution is not yet implemented.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Split in Half",
+    "id": "split-in-half",
+    "category": "Split",
+    "fr": "Diviser en deux",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Split by File Size",
+    "id": "split-by-file-size",
+    "category": "Split",
+    "fr": "Diviser par taille",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Split by Text",
+    "id": "split-by-text",
+    "category": "Split",
+    "fr": "Diviser par texte",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Compress PDF",
+    "id": "compress-pdf",
+    "category": "Optimize",
+    "fr": "Compresser PDF",
+    "available": false,
+    "reason": "A server-side image optimization engine is required. Re-saving a PDF alone is not compression.",
+    "engine": "server",
+    "description": "Reduce size with a dedicated optimization engine."
+  },
+  {
+    "name": "OCR PDF",
+    "id": "ocr-pdf",
+    "category": "Optimize",
+    "fr": "OCR PDF",
+    "available": false,
+    "reason": "OCRmyPDF/Tesseract worker hosting and licensing review are required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Deskew PDF",
+    "id": "deskew-pdf",
+    "category": "Optimize",
+    "fr": "Redresser PDF",
+    "available": false,
+    "reason": "An isolated scan-processing worker is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Repair PDF",
+    "id": "repair-pdf",
+    "category": "Optimize",
+    "fr": "Réparer PDF",
+    "available": false,
+    "reason": "A hosted qpdf worker is required for structural repair.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Grayscale PDF",
+    "id": "grayscale-pdf",
+    "category": "Optimize",
+    "fr": "PDF en niveaux de gris",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF to Word",
+    "id": "pdf-to-word",
+    "category": "Convert",
+    "fr": "PDF vers Word",
+    "available": false,
+    "reason": "An evaluated DOCX conversion engine is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF to Excel / CSV",
+    "id": "pdf-to-excel-csv",
+    "category": "Convert",
+    "fr": "PDF vers Excel / CSV",
+    "available": false,
+    "reason": "An evaluated table extraction engine is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF to PowerPoint",
+    "id": "pdf-to-powerpoint",
+    "category": "Convert",
+    "fr": "PDF vers PowerPoint",
+    "available": false,
+    "reason": "An evaluated presentation conversion engine is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF to Images",
+    "id": "pdf-to-images",
+    "category": "Convert",
+    "fr": "PDF vers images",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF to Text",
+    "id": "pdf-to-text",
+    "category": "Convert",
+    "fr": "PDF vers texte",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Extract Images from PDF",
+    "id": "extract-images-from-pdf",
+    "category": "Convert",
+    "fr": "Extraire les images",
+    "available": false,
+    "reason": "An embedded-image extraction adapter is required; rendered pages are available separately.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Images to PDF",
+    "id": "images-to-pdf",
+    "category": "Convert",
+    "fr": "Images vers PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Build a PDF from JPG and PNG images."
+  },
+  {
+    "name": "Word to PDF",
+    "id": "word-to-pdf",
+    "category": "Convert",
+    "fr": "Word vers PDF",
+    "available": false,
+    "reason": "An isolated LibreOffice worker is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "HTML to PDF",
+    "id": "html-to-pdf",
+    "category": "Convert",
+    "fr": "HTML vers PDF",
+    "available": false,
+    "reason": "An isolated browser worker with restricted network access is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Protect PDF",
+    "id": "protect-pdf",
+    "category": "Security",
+    "fr": "Protéger PDF",
+    "available": false,
+    "reason": "A hosted qpdf encryption worker is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Unlock PDF",
+    "id": "unlock-pdf",
+    "category": "Security",
+    "fr": "Déverrouiller PDF",
+    "available": false,
+    "reason": "A hosted qpdf password-handling worker is required.",
+    "engine": "server",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Watermark PDF",
+    "id": "watermark-pdf",
+    "category": "Security",
+    "fr": "Filigrane PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Flatten PDF",
+    "id": "flatten-pdf",
+    "category": "Security",
+    "fr": "Aplatir PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Crop PDF",
+    "id": "crop-pdf",
+    "category": "Utilities",
+    "fr": "Recadrer PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Resize PDF",
+    "id": "resize-pdf",
+    "category": "Utilities",
+    "fr": "Redimensionner PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Rotate PDF",
+    "id": "rotate-pdf",
+    "category": "Utilities",
+    "fr": "Pivoter PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Permanently rotate selected pages."
+  },
+  {
+    "name": "Flip PDF",
+    "id": "flip-pdf",
+    "category": "Utilities",
+    "fr": "Retourner PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "N-up PDF",
+    "id": "n-up-pdf",
+    "category": "Utilities",
+    "fr": "PDF multipages par feuille",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Add Page Numbers",
+    "id": "add-page-numbers",
+    "category": "Utilities",
+    "fr": "Numéros de page",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Header & Footer",
+    "id": "header-footer",
+    "category": "Utilities",
+    "fr": "En-tête et pied de page",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Bates Numbering",
+    "id": "bates-numbering",
+    "category": "Utilities",
+    "fr": "Numérotation Bates",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Create Bookmarks",
+    "id": "create-bookmarks",
+    "category": "Utilities",
+    "fr": "Créer des signets",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Edit PDF Metadata",
+    "id": "edit-pdf-metadata",
+    "category": "Utilities",
+    "fr": "Modifier les métadonnées",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "Rename PDF",
+    "id": "rename-pdf",
+    "category": "Utilities",
+    "fr": "Renommer PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  },
+  {
+    "name": "PDF Workflow Builder",
+    "id": "pdf-workflow-builder",
+    "category": "Workflows",
+    "fr": "Flux de travail PDF",
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Choose your settings and create a new document."
+  }
+]

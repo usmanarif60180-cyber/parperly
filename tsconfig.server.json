@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "types": ["node"]
+  },
+  "include": [
+    "apps/api/**/*.ts",
+    "apps/worker-node/**/*.ts",
+    "packages/pdf-core/index.ts"
+  ]
+}
