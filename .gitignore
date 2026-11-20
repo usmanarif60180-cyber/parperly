@@ -13,3 +13,4 @@ apps/web/public/cmaps/
 apps/web/public/wasm/
 
 *.tsbuildinfo
+apps/web/public/THIRD-PARTY-NOTICES.txt

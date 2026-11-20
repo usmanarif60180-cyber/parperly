@@ -19,3 +19,5 @@ for (const dir of ["cmaps", "standard_fonts", "wasm"])
   await cp("node_modules/pdfjs-dist/" + dir, out + "/" + dir, {
     recursive: true,
   });
+
+await import("./notices.mjs");

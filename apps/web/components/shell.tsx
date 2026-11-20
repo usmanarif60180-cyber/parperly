@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { FileText, Menu, X, Globe, UserRound } from "lucide-react";
 import { useState } from "react";
-import { useApp } from "./context";
+import { useApp, asset } from "./context";
 import brand from "../../../packages/config/brand.json";
 export function Header() {
   const { t, lang, setLang, user } = useApp();
@@ -82,6 +82,7 @@ export function Footer() {
             {p[0].toUpperCase() + p.slice(1)}
           </Link>
         ))}
+      <a href={asset("THIRD-PARTY-NOTICES.txt")}>Software notices</a>
       </nav>
       <small>
         Local tools available • Cloud processing not connected • No paid plans
