@@ -9,7 +9,7 @@ The existing `/tools/pdf-editor/` route now opens a dedicated editing workspace.
 - Added multiline text with Helvetica, Times and Courier, bold/italic, size, color, alignment and line spacing. Find/replace operates on added text. Built-in fonts support Latin/WinAnsi; unsupported text fails export explicitly.
 - PNG/JPEG insertion/replacement, transparency, aspect-preserving resize, rotation and opacity.
 - Drawn, typed and uploaded signatures/initials; placement on current/all/range-selected pages. Optional reusable signature storage is localStorage, explicitly disclosed and removable.
-- Original text fields, checkboxes, radio groups and dropdowns. Original field dictionaries/widgets survive default exports and reordering. Unsupported field types are retained but not editable.
+- Original text fields, checkboxes, radio groups and dropdowns. Original field dictionaries/widgets survive default exports and reordering. Unsupported field types and multi-select dropdowns are retained but not editable; their existing values are preserved.
 - URI and internal page links; external URL validation; replacement/removal of original URL links and removal of original annotations.
 - Highlight, underline and strikeout by clicking an embedded text run or dragging an area; freehand ink and actual sticky-note annotations. Color, opacity, thickness and annotation appearance streams are written to the PDF.
 - Rectangles, circles, ellipses, lines, arrows and checkmarks. Whiteout is an opaque visual cover, explicitly **not secure redaction**.

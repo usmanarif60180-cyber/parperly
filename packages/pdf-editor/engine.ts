@@ -76,7 +76,7 @@ export async function readDocument(
         type = "radio";
         value = f.getSelected() || "";
         options = f.getOptions();
-      } else if (f instanceof PDFDropdown) {
+      } else if (f instanceof PDFDropdown && !f.isMultiselect()) {
         type = "dropdown";
         value = f.getSelected()[0] || "";
         options = f.getOptions();
@@ -234,7 +234,12 @@ export async function exportEditor(
   const form = doc.getForm();
   for (const f of form.getFields()) {
     const value = state.values[f.getName()];
-    if (value === undefined || f.isReadOnly()) continue;
+    if (
+      value === undefined ||
+      f.isReadOnly() ||
+      (f instanceof PDFDropdown && f.isMultiselect())
+    )
+      continue;
     if (f instanceof PDFTextField && value !== (f.getText() || ""))
       f.setText(String(value));
     if (f instanceof PDFCheckBox) value ? f.check() : f.uncheck();
@@ -271,14 +276,20 @@ export async function exportEditor(
   const loaded = new Map<number, PDFDocument>();
   for (const p of state.pages) {
     let page: PDFPage;
+    const removed = state.removed
+      .filter((r) => r.startsWith(p.id + ":"))
+      .map((r) => r.slice(p.id.length + 1));
     if (p.source === baseSource) page = originals[p.index];
     else if (p.source < 0) page = doc.addPage([p.width, p.height]);
     else {
-      let source = loaded.get(p.source);
+      // Annotation IDs belong to the source PDF, before copyPages remaps refs.
+      // Use an isolated source when removing so sibling copies stay unchanged.
+      let source = removed.length ? undefined : loaded.get(p.source);
       if (!source) {
         source = await PDFDocument.load(sources[p.source]);
-        loaded.set(p.source, source);
+        if (!removed.length) loaded.set(p.source, source);
       }
+      removeAnnots(source, source.getPage(p.index), removed);
       [page] = await doc.copyPages(source, [p.index]);
     }
     if (p.source >= 0) doc.addPage(page);

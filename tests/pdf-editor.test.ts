@@ -304,3 +304,43 @@ test("clears selected radio and dropdown fields on export", async () => {
   assert.equal(doc.getForm().getRadioGroup("Plan").getSelected(), undefined);
   assert.deepEqual(doc.getForm().getDropdown("Country").getSelected(), []);
 });
+
+test("removes annotations from imported pages without changing sibling copies", async () => {
+  const { bytes, state } = await sample();
+  const imported = await flattenedSource(bytes);
+  const info = await readDocument(imported, 1, "imported");
+  const source = await PDFDocument.load(imported);
+  const ref = source.getPage(0).node.Annots()!.asArray()[0];
+  const id = ref
+    .toString()
+    .replace(/ (\d+) R$/, (_, g) => `R${g === "0" ? "" : g}`);
+  state.pages.push(info.pages[0], { ...info.pages[0], id: "sibling" });
+  state.removed.push(`${info.pages[0].id}:${id}`);
+  const out = await PDFDocument.load(
+    await exportEditor([bytes, imported], state),
+  );
+  assert.equal(annots(out, 2).filter((a) => subtype(a) === "/Link").length, 0);
+  assert.equal(annots(out, 3).filter((a) => subtype(a) === "/Link").length, 1);
+});
+
+test("preserves multi-select dropdown choices during unrelated edits", async () => {
+  const { bytes } = await sample();
+  const doc = await PDFDocument.load(bytes);
+  const field = doc.getForm().getDropdown("Country");
+  field.enableMultiselect();
+  field.select(["France", "United Kingdom"]);
+  const raw = await doc.save();
+  const info = await readDocument(raw);
+  const state: EditorState = {
+    pages: info.pages,
+    objects: [],
+    removed: [],
+    values: Object.fromEntries(info.fields.map((f) => [f.name, f.value])),
+  };
+  state.values.Name = "Unrelated edit";
+  const out = await PDFDocument.load(await exportEditor([raw], state));
+  assert.deepEqual(out.getForm().getDropdown("Country").getSelected(), [
+    "France",
+    "United Kingdom",
+  ]);
+});
