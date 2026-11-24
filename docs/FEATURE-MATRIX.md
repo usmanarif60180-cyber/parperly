@@ -4,7 +4,7 @@
 
 | Tool | Status | Engine | Test evidence | Limitations / remaining work | External dependency |
 | --- | --- | --- | --- | --- | --- |
-| PDF Editor | Implemented | PDF.js + pdf-lib | Browser output verified; full corpus pending | Additive text, PNGs, rectangles, highlights, whiteout, object position/size, undo/redo. No existing-text editing, links, freehand annotation, font substitution or secure redaction. Latin fonts only. | None for local processing |
+| PDF Editor | Local editor implemented; licensed service pending configuration | PDF.js + pdf-lib; optional Apryse Server SDK | Export/reopen tests and browser checks; see PDF-EDITOR.md | Text, images, signatures, forms, links, annotations, shapes, page management, undo/redo. Genuine existing-content editing and OCR require configured licensed service. Added text uses Latin fonts; whiteout is not secure redaction. | Apryse Server SDK/OCR entitlement and authenticated VPS endpoint for advanced features |
 | Fill & Sign | Implemented | PDF.js + pdf-lib | Unit smoke tests; full corpus pending | Existing AcroForm text and checkboxes; drawn PNG signature placement. No certificate signing; dropdown filling UI not implemented. | None for local processing |
 | Create PDF Forms | Implemented | pdf-lib | Unit smoke tests; full corpus pending | One text, checkbox or dropdown per run; repeat on output for additional fields. No radio button builder or XFA. | None for local processing |
 | Remove Annotations | Implemented | pdf-lib | Unit smoke tests; full corpus pending | Removes annotations except widgets; per-page selection. Does not offer individual comment selection. | None for local processing |

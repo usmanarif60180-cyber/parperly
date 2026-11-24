@@ -28,7 +28,7 @@
   "downloadAll": "Download all as ZIP",
   "ready": "Your output is ready",
   "working": "Processing",
-  "privacy": "Your documents stay in browser memory. They are not uploaded to Paperly or Firebase. Account details are handled by Firebase Authentication.",
+  "privacy": "Your documents stay in browser memory. They are not uploaded to Parperly or Firebase. Account details are handled by Firebase Authentication.",
   "related": "Related tools",
   "selected": "Selected files",
   "empty": "No tools match your search.",

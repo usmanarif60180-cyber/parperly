@@ -1,0 +1,469 @@
+.pe-editor {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  color: #142d24;
+}
+.pe-heading,
+.pe-document-bar,
+.pe-row,
+.pe-toolbar,
+.pe-view-controls,
+.pe-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pe-heading {
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.pe-heading h1 {
+  font-size: 36px;
+  margin: 4px 0;
+}
+.pe-heading p {
+  margin: 4px 0;
+}
+.pe-editor button {
+  border: 1px solid #cbd9d2;
+  border-radius: 7px;
+  background: #fff;
+  padding: 7px 11px;
+  font-size: 14px;
+  color: #183a2b;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.pe-editor button:hover {
+  background: #eef7f1;
+}
+.pe-editor button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.pe-editor button.primary,
+.pe-editor button[aria-pressed="true"] {
+  background: #047857;
+  color: white;
+  border-color: #047857;
+}
+.pe-editor button:focus-visible,
+.pe-editor input:focus-visible,
+.pe-editor textarea:focus-visible,
+.pe-editor select:focus-visible {
+  outline: 3px solid #34d399;
+  outline-offset: 2px;
+}
+.pe-editor label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+}
+.pe-editor input:not([type="checkbox"]):not([type="range"]),
+.pe-editor textarea,
+.pe-editor select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #cbd5d0;
+  border-radius: 6px;
+  padding: 7px;
+  background: white;
+  font: inherit;
+  color: #142d24;
+}
+.pe-editor input[type="color"] {
+  height: 35px;
+}
+.pe-editor .pe-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.pe-help {
+  font-size: 13px !important;
+  color: #586960;
+  line-height: 1.55;
+}
+.pe-status {
+  background: #edf9f1;
+  border-left: 3px solid #047857;
+  padding: 10px 14px;
+}
+.pe-notice {
+  background: #f0f6f3;
+  border: 1px solid #c9dfd2;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.pe-notice h2 {
+  font-size: 18px;
+}
+.pe-compact {
+  padding: 7px 12px;
+  margin: 0 0 12px;
+}
+.pe-compact button {
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+}
+.pe-upload {
+  padding: 70px 20px;
+  text-align: center;
+  border: 2px dashed #a5c9b4;
+  background: #f8fcfa;
+  border-radius: 16px;
+  margin: 30px 0;
+}
+.pe-upload p {
+  max-width: 620px;
+  margin: 15px auto;
+}
+.pe-document-bar {
+  padding: 12px;
+  background: #f1f7f3;
+  border: 1px solid #c9dfd2;
+  border-radius: 9px 9px 0 0;
+}
+.pe-document-bar strong {
+  margin-right: auto;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pe-document-bar span {
+  font-size: 13px;
+  color: #52705f;
+}
+.pe-document-bar .pe-dirty {
+  color: #9a5c09;
+}
+.pe-toolbar {
+  padding: 10px;
+  border: 1px solid #d2dfd7;
+  border-top: 0;
+  margin-bottom: 10px;
+  background: white;
+}
+.pe-toolbar button {
+  padding: 8px 12px;
+}
+.pe-workspace {
+  display: grid;
+  grid-template-columns: 150px minmax(280px, 1fr) 255px;
+  border: 1px solid #cfdbd3;
+  border-radius: 9px;
+  overflow: hidden;
+  min-height: 650px;
+}
+.pe-pages {
+  background: #f5f8f6;
+  border-right: 1px solid #d2dfd7;
+  padding: 12px;
+  max-height: 850px;
+  overflow: auto;
+}
+.pe-pages h2,
+.pe-properties h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.pe-pages .pe-page-actions button {
+  width: 100%;
+  font-size: 13px;
+  padding: 5px;
+}
+.pe-thumb {
+  display: block;
+  width: 100%;
+  padding: 7px !important;
+  margin: 10px 0 !important;
+}
+.pe-thumb.active {
+  border: 2px solid #047857 !important;
+  background: #e6f5ec !important;
+}
+.pe-thumb-sheet {
+  position: relative;
+  display: table;
+  margin: auto;
+  pointer-events: none;
+  box-shadow: 0 2px 4px #0002;
+}
+.pe-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.pe-thumb span {
+  display: block;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.pe-center {
+  min-width: 0;
+  background: #dce4df;
+}
+.pe-view-controls {
+  padding: 10px;
+  background: #fafcfb;
+  border-bottom: 1px solid #d2dfd7;
+  font-size: 13px;
+}
+.pe-view-controls input {
+  width: 52px !important;
+}
+.pe-view-controls label {
+  flex-direction: row;
+  align-items: center;
+}
+.pe-view-controls button {
+  font-size: 12px;
+  padding: 5px 7px;
+}
+.pe-center > .pe-page-actions {
+  padding: 7px 10px;
+  background: #f5f8f6;
+}
+.pe-center > .pe-page-actions button {
+  font-size: 12px;
+  padding: 4px 7px;
+}
+.pe-page-scroll {
+  height: 690px;
+  overflow: auto;
+  position: relative;
+  padding: 24px;
+  overscroll-behavior: contain;
+}
+.pe-sheet {
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0 3px 18px #133d2828;
+  background: white;
+}
+.pe-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  overflow: visible;
+}
+.pe-properties {
+  padding: 16px;
+  background: #fff;
+  border-left: 1px solid #d2dfd7;
+  max-height: 850px;
+  overflow: auto;
+}
+.pe-properties label {
+  margin-bottom: 12px;
+}
+.pe-properties details {
+  margin: 18px 0;
+  border-top: 1px solid #dbe4de;
+  padding-top: 12px;
+  font-size: 14px;
+}
+.pe-properties summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.pe-properties details label {
+  margin-top: 10px;
+}
+.pe-properties p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.pe-numbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+.pe-numbers label {
+  margin: 0;
+}
+.pe-list {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  text-align: left;
+}
+.pe-warning,
+.pe-scan {
+  padding: 10px;
+  background: #fff7db;
+  color: #715214;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pe-scan {
+  margin: 0;
+}
+.pe-export {
+  padding: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  background: #f5f8f6;
+  border: 1px solid #d2dfd7;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+.pe-export > label:first-child {
+  min-width: 250px;
+}
+.pe-export p {
+  width: 100%;
+  margin: 0;
+}
+.pe-annotation {
+  border-bottom: 1px solid #e0e8e3;
+  padding: 8px 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.pe-annotation span {
+  display: block;
+  margin-bottom: 5px;
+}
+.pe-modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  background: #0e231ba8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.pe-dialog {
+  background: white;
+  padding: 24px;
+  border-radius: 14px;
+  width: 660px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+}
+.pe-dialog > .pe-row:first-child {
+  justify-content: space-between;
+}
+.pe-dialog label {
+  margin: 12px 0;
+}
+.pe-sign-canvas {
+  width: 100%;
+  height: 180px;
+  border: 1px dashed #8caf9b;
+  background: linear-gradient(transparent 79%, #dae8df 80%, transparent 81%);
+  touch-action: none;
+  margin: 15px 0;
+}
+.pe-dialog h2 {
+  font-size: 22px;
+}
+.pe-dialog p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 1050px) {
+  .pe-workspace {
+    grid-template-columns: 120px minmax(250px, 1fr);
+  }
+  .pe-properties {
+    grid-column: 1/-1;
+    max-height: none;
+    border-left: 0;
+    border-top: 1px solid #d2dfd7;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .pe-properties > h2,
+  .pe-properties > p {
+    width: 100%;
+  }
+  .pe-properties label {
+    min-width: 120px;
+    max-width: 250px;
+  }
+  .pe-properties details {
+    min-width: 230px;
+  }
+  .pe-thumb-sheet {
+    max-width: 100%;
+  }
+  .pe-page-scroll {
+    height: 600px;
+  }
+}
+@media (max-width: 640px) {
+  .pe-editor {
+    padding: 18px 10px;
+  }
+  .pe-heading h1 {
+    font-size: 28px;
+  }
+  .pe-document-bar strong {
+    max-width: 100%;
+    width: 100%;
+  }
+  .pe-workspace {
+    display: flex;
+    flex-direction: column;
+  }
+  .pe-pages {
+    max-height: 190px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    overflow: auto;
+    border-right: 0;
+  }
+  .pe-pages h2,
+  .pe-pages > .pe-help {
+    display: none;
+  }
+  .pe-pages > .pe-page-actions {
+    min-width: 110px;
+  }
+  .pe-thumb {
+    min-width: 95px;
+    width: 95px;
+    margin: 0 !important;
+  }
+  .pe-thumb-sheet canvas {
+    max-width: 75px;
+    height: auto !important;
+  }
+  .pe-page-scroll {
+    height: 520px;
+    padding: 16px;
+  }
+  .pe-toolbar {
+    gap: 5px;
+  }
+  .pe-toolbar button {
+    font-size: 12px;
+    padding: 7px;
+  }
+  .pe-export {
+    padding: 12px;
+  }
+  .pe-modal {
+    padding: 10px;
+  }
+}

@@ -28,7 +28,7 @@
   "downloadAll": "Tout télécharger en ZIP",
   "ready": "Votre résultat est prêt",
   "working": "Traitement",
-  "privacy": "Vos documents restent dans la mémoire du navigateur. Ils ne sont envoyés ni à Paperly ni à Firebase. Les comptes sont gérés par Firebase Authentication.",
+  "privacy": "Vos documents restent dans la mémoire du navigateur. Ils ne sont envoyés ni à Parperly ni à Firebase. Les comptes sont gérés par Firebase Authentication.",
   "related": "Outils associés",
   "selected": "Fichiers sélectionnés",
   "empty": "Aucun outil ne correspond à votre recherche.",

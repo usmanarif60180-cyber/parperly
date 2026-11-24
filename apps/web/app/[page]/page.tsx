@@ -4,14 +4,14 @@ const content: Record<string, { title: string; paragraphs: string[] }> = {
   about: {
     title: "A clearer way to work with documents.",
     paragraphs: [
-      "Paperly brings practical PDF tools into one workspace. Available local tools process files on your device, while advanced server tools clearly explain their setup requirements.",
+      "Parperly brings practical PDF tools into one workspace. Available local tools process files on your device, while advanced server tools clearly explain their setup requirements.",
       "This is an actively developed application. Capabilities are enabled only when a real processing path exists. No customer counts, certifications or perfect-conversion claims are made.",
     ],
   },
   privacy: {
     title: "Your documents stay on your device.",
     paragraphs: [
-      "Available PDF tools read documents into browser memory and generate new downloads. Paperly does not upload PDF contents to Firebase or a processing server. Closing or reloading the tool releases application references to the files; downloaded copies remain on your device.",
+      "Available PDF tools read documents into browser memory and generate new downloads. Parperly does not upload PDF contents to Firebase or a processing server. Closing or reloading the tool releases application references to the files; downloaded copies remain on your device.",
       "Firebase Authentication processes your email, account identity and authentication data. Browser storage holds your language preference, Firebase session, local job counts and workflow settings. Local history excludes PDF contents and filenames. Settings you save in workflow presets may contain text you entered; avoid saving sensitive text in shared browsers.",
       "The website is hosted by GitHub Pages, whose infrastructure handles ordinary web requests. No analytics SDK or advertising trackers are loaded by this application. Server-side document storage, retention policies and processing will be described here if they are introduced.",
       "Use Clear local history on the account page and delete saved presets in the workflow builder to remove browser metadata. Sign out on shared devices. This page describes the current implementation; it does not claim regulatory certification.",
@@ -26,7 +26,7 @@ const content: Record<string, { title: string; paragraphs: string[] }> = {
     ],
   },
   terms: {
-    title: "Using Paperly responsibly.",
+    title: "Using Parperly responsibly.",
     paragraphs: [
       "Use documents that you own or are authorized to modify. Keep your originals and review every output. The application is under active development; do not rely on it as your only copy of an important document.",
       "Tool-specific limitations are shown before processing. Availability, formats and output fidelity vary by tool. No paid subscriptions, service-level commitments or certifications are offered in this release.",
@@ -36,8 +36,8 @@ const content: Record<string, { title: string; paragraphs: string[] }> = {
   cookies: {
     title: "Browser storage, explained.",
     paragraphs: [
-      "Paperly uses local browser storage for language, Firebase authentication persistence, recent job metadata and saved workflows. These are functional preferences, not advertising profiles.",
-      "No analytics or advertising SDK is loaded by Paperly. Firebase and GitHub may process requests under their own service policies. Clear saved history and presets through the application; clear site data in your browser to remove all local settings and session data.",
+      "Parperly uses local browser storage for language, Firebase authentication persistence, recent job metadata and saved workflows. These are functional preferences, not advertising profiles.",
+      "No analytics or advertising SDK is loaded by Parperly. Firebase and GitHub may process requests under their own service policies. Clear saved history and presets through the application; clear site data in your browser to remove all local settings and session data.",
     ],
   },
   help: {
@@ -60,13 +60,13 @@ const content: Record<string, { title: string; paragraphs: string[] }> = {
     title: "Report an issue.",
     paragraphs: [
       "Use the repository issue tracker to report reproducible bugs. Include the tool, browser, error message and steps. Do not post private documents, passwords or identifying information in a public issue.",
-      "A private support mailbox and ticket service have not yet been configured. Paperly does not automatically attach documents to any report.",
+      "A private support mailbox and ticket service have not yet been configured. Parperly does not automatically attach documents to any report.",
     ],
   },
   desktop: {
     title: "Works in your browser. Desktop is separate.",
     paragraphs: [
-      "There is no standalone Paperly desktop application or installer. Available local tools process documents in the browser. Do not download software claiming to be an official desktop release from this page.",
+      "There is no standalone Parperly desktop application or installer. Available local tools process documents in the browser. Do not download software claiming to be an official desktop release from this page.",
       "A fully offline, packaged desktop application remains a separate deliverable.",
     ],
   },
@@ -100,7 +100,7 @@ export default async function Page({
   if (!c) notFound();
   return (
     <article className="prose-page">
-      <span className="eyebrow">PAPERLY</span>
+      <span className="eyebrow">PARPERLY</span>
       <h1>{c.title}</h1>
       {c.paragraphs.map((p) => (
         <p key={p}>{p}</p>

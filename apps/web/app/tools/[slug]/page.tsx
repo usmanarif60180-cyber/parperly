@@ -1,4 +1,5 @@
 import tools from "../../../../../packages/tool-registry/tools.json";
+import { PdfEditor } from "../../../components/pdf-editor";
 import { Tool } from "../../../components/tool";
 import { WorkflowBuilder } from "../../../components/workflow";
 import { notFound } from "next/navigation";
@@ -27,7 +28,9 @@ export default async function Page({
   const { slug } = await params;
   const tool = tools.find((t) => t.id === slug);
   if (!tool) notFound();
-  return tool.id === "pdf-workflow-builder" ? (
+  return tool.id === "pdf-editor" ? (
+    <PdfEditor />
+  ) : tool.id === "pdf-workflow-builder" ? (
     <WorkflowBuilder />
   ) : (
     <Tool tool={tool} />

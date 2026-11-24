@@ -90,7 +90,7 @@ export function Account() {
   }
   return (
     <section className="account-page">
-      <span className="eyebrow">YOUR PAPERLY WORKSPACE</span>
+      <span className="eyebrow">YOUR PARPERLY WORKSPACE</span>
       <h1>
         {user
           ? "Welcome back" +
