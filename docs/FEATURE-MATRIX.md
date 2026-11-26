@@ -1,6 +1,6 @@
 # Feature matrix — current release
 
-2026-11-20. 31 local tool workflows have real processing paths; 13 are not available. No feature is marked Production Ready. “Implemented” covers the limited mode described here, not every subfeature in the master brief.
+2026-11-26. 32 local tool workflows have real processing paths; 12 are not available. No feature is marked Production Ready. “Implemented” covers the limited mode described here, not every subfeature in the master brief.
 
 | Tool | Status | Engine | Test evidence | Limitations / remaining work | External dependency |
 | --- | --- | --- | --- | --- | --- |
@@ -14,7 +14,7 @@
 | Delete PDF Pages | Implemented | pdf-lib | Unit smoke tests; full corpus pending | Basic mode; advanced structures/signatures may not be preserved. Full acceptance corpus pending. | None for local processing |
 | Extract PDF Pages | Implemented | pdf-lib | Unit smoke tests; full corpus pending | Basic mode; advanced structures/signatures may not be preserved. Full acceptance corpus pending. | None for local processing |
 | Split by Pages | Implemented | pdf-lib | Browser output verified; full corpus pending | Basic mode; advanced structures/signatures may not be preserved. Full acceptance corpus pending. | None for local processing |
-| Split by Bookmarks | Planned | BullMQ orchestration (planned) | Not run | Bookmark destination resolution is not yet implemented. | Bookmark destination resolution is not yet implemented. |
+| Split by Bookmarks | Implemented | pdf-lib browser worker | Direct/named destinations, nested levels, preamble/order and invalid outline tests | Level selection; splits at page boundaries, keeps preamble, combines duplicate destinations. Forms flattened. Output document-level outlines are not retained. External/unresolved bookmarks fail explicitly. | None |
 | Split in Half | Implemented | pdf-lib | Unit smoke tests; full corpus pending | Geometric horizontal/vertical splitting; reject rotated input until normalized. | None for local processing |
 | Split by File Size | Implemented | pdf-lib | Unit smoke tests; full corpus pending | Basic mode; advanced structures/signatures may not be preserved. Full acceptance corpus pending. | None for local processing |
 | Split by Text | Implemented | PDF.js + pdf-lib | Unit smoke tests; full corpus pending | Literal matching starts a new output at matching pages. Does not detect changing regex values. | None for local processing |
@@ -61,4 +61,4 @@
 - Firestore/storage deny-all rules: supplied, not deployed or emulator tested. No browser document access is enabled.
 - Paid plans, billing, teams, cloud dashboard/history, private support tickets, Drive/Dropbox integrations: planned, not configured.
 - Mobile CSS and keyboard focus styles exist. Fixed mobile viewport QA could not be completed because the browser viewport override was not applied; native mobile testing remains outstanding.
-- Domain parperly.com: user purchased through OVH; DNS/HTTPS switch not yet authorized for execution or configured. VPS details requested.
+- Domain parperly.com: DNS/HTTPS configured and GitHub Pages deployed. VPS connection details and Apryse Server SDK/OCR entitlement are still needed to activate server processing.

@@ -360,3 +360,20 @@ test("rejects export beyond the supported 300-page workspace limit", async () =>
     /300 pages/,
   );
 });
+
+test("stale async imports cannot replace a newer edit or undone state", async () => {
+  const { assertCurrentSnapshot } =
+    await import("../packages/pdf-editor/model");
+  const { state } = await sample();
+  const newer = { ...state, values: { ...state.values, Name: "Latest edit" } };
+  assert.doesNotThrow(() => assertCurrentSnapshot(state, state));
+  assert.throws(
+    () => assertCurrentSnapshot(state, newer),
+    /latest edits were kept/,
+  );
+  assert.throws(
+    () => assertCurrentSnapshot(newer, state),
+    /latest edits were kept/,
+  );
+  assert.equal(newer.values.Name, "Latest edit");
+});

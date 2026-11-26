@@ -70,6 +70,17 @@ export const fields: Record<string, Field[]> = {
     pages,
     { key: "separate", label: "One PDF per selected page", type: "checkbox" },
   ],
+  "split-by-bookmarks": [
+    {
+      key: "bookmarkLevel",
+      label: "Bookmark level",
+      type: "number",
+      value: 1,
+      min: 1,
+      max: 20,
+      note: "1 = top-level bookmarks. Outputs follow page order; duplicate destinations are combined. Forms are flattened; document-level bookmarks are not copied to outputs.",
+    },
+  ],
   "split-by-pages": [
     pages,
     {

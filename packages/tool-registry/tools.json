@@ -104,10 +104,10 @@
     "id": "split-by-bookmarks",
     "category": "Split",
     "fr": "Diviser par signets",
-    "available": false,
-    "reason": "Bookmark destination resolution is not yet implemented.",
-    "engine": "server",
-    "description": "Choose your settings and create a new document."
+    "available": true,
+    "reason": "",
+    "engine": "browser",
+    "description": "Split at bookmark page destinations. Choose a level; pages before the first bookmark are retained."
   },
   {
     "name": "Split in Half",

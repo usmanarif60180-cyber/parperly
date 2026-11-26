@@ -19,6 +19,7 @@ import {
   pdfRectangle,
 } from "../../../packages/pdf-editor/engine";
 import {
+  assertCurrentSnapshot,
   defaultObject,
   dimensions,
   reorderPage,
@@ -120,6 +121,7 @@ export function PdfEditor() {
     setError("");
   }, []);
   function undo() {
+    if (busy) return;
     const p = history.current.pop();
     if (!p) return;
     future.current.push(current.current);
@@ -133,6 +135,7 @@ export function PdfEditor() {
     setSelected("");
   }
   function redo() {
+    if (busy) return;
     const p = future.current.pop();
     if (!p) return;
     history.current.push(current.current);
@@ -179,6 +182,7 @@ export function PdfEditor() {
   }, []);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
+      if (busy) return;
       if (
         (e.target as HTMLElement).closest(
           "input,textarea,select,[contenteditable]",
@@ -200,7 +204,7 @@ export function PdfEditor() {
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [selected, commit]);
+  }, [selected, commit, busy]);
   useEffect(() => {
     if (!page || !scroll.current || fit === "manual") return;
     const el = scroll.current;
@@ -505,9 +509,11 @@ export function PdfEditor() {
     setTool("select");
   }
   async function imageFile(f?: File) {
-    if (!f) return;
+    if (!f || busy) return;
+    const snapshot = current.current;
     try {
       const image = await readImage(f);
+      assertCurrentSnapshot(snapshot, current.current);
       if (replaceImage.current && object)
         update({
           data: image.data,
@@ -529,6 +535,7 @@ export function PdfEditor() {
   }
   async function importPdf(file?: File, duplicate = false) {
     if (busy) return;
+    const snapshot = current.current;
     setBusy(true);
     setError("");
     try {
@@ -552,6 +559,10 @@ export function PdfEditor() {
       if (state.pages.length + info.pages.length > 300)
         throw Error("Maximum 300 pages.");
       const d = await openPdf(raw);
+      if (current.current !== snapshot) {
+        await d.destroy();
+        assertCurrentSnapshot(snapshot, current.current);
+      }
       docRefs.current.push(d);
       setDocs([...docs, d]);
       setSources([...sources, raw]);
@@ -1782,6 +1793,7 @@ export function PdfEditor() {
               <input
                 type="checkbox"
                 checked={flatten}
+                disabled={busy}
                 onChange={(e) => {
                   setFlatten(e.target.checked);
                   setOutput(null);

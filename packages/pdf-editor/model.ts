@@ -143,3 +143,13 @@ export function reorderPage(s: EditorState, from: number, to: number) {
   pages.splice(to, 0, p);
   return { ...s, pages };
 }
+
+export function assertCurrentSnapshot(
+  expected: EditorState,
+  current: EditorState,
+) {
+  if (expected !== current)
+    throw Error(
+      "The document changed while loading. Your latest edits were kept; please retry the import.",
+    );
+}

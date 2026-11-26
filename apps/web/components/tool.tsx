@@ -284,7 +284,7 @@ export function Tool({ tool }: { tool: ToolInfo }) {
           setError("ZIP creation failed. Download the files separately.");
         else
           saveDownload({
-            name: "paperly-outputs.zip",
+            name: "parperly-outputs.zip",
             bytes,
             type: "application/zip",
           });

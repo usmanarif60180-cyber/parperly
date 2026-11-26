@@ -1,3 +1,4 @@
+import { bookmarkBoundaries } from "./bookmarks";
 import {
   PDFDocument,
   PDFName,
@@ -94,7 +95,7 @@ export async function processPdf(
     throw Error("The total file limit is 40 MB.");
   progress("Reading documents");
   const outputs: Output[] = [];
-  async function save(doc: PDFDocument, name = "paperly.pdf") {
+  async function save(doc: PDFDocument, name = "parperly.pdf") {
     progress("Validating output");
     if (!doc.getPageCount() || doc.getPageCount() > limits.pages)
       throw Error("Output must contain 1–300 pages.");
@@ -213,6 +214,7 @@ export async function processPdf(
       "split-by-pages",
       "split-by-file-size",
       "split-by-text",
+      "split-by-bookmarks",
     ].includes(tool)
   ) {
     let groups: number[][] = [];
@@ -224,6 +226,24 @@ export async function processPdf(
       const each = int(s, "every", 1, 1, 300);
       for (let i = 0; i < selected.length; i += each)
         groups.push(selected.slice(i, i + each));
+    } else if (tool === "split-by-bookmarks") {
+      const boundaries = [
+        ...bookmarkBoundaries(doc, int(s, "bookmarkLevel", 1, 1, 20)),
+        count,
+      ];
+      if (doc.getForm().getFields().length) {
+        doc.getForm().flatten();
+        for (const p of doc.getPages()) {
+          const annots = p.node.Annots();
+          if (annots)
+            for (let i = annots.size() - 1; i >= 0; i--)
+              if (!doc.context.lookup(annots.get(i))) annots.remove(i);
+        }
+      }
+      for (let i = 0; i < boundaries.length - 1; i++)
+        groups.push(
+          doc.getPageIndices().slice(boundaries[i], boundaries[i + 1]),
+        );
     } else if (tool === "split-by-text") {
       const starts = String(s.boundaries || "")
         .split(",")
