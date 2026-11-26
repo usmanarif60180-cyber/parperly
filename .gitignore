@@ -16,3 +16,5 @@ apps/web/public/wasm/
 apps/web/public/THIRD-PARTY-NOTICES.txt
 apps/editor-service/secrets/
 apps/editor-service/resources/
+
+apps/web/public/webviewer/

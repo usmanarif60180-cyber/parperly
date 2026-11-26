@@ -11,6 +11,7 @@ import {
   type RemoteOperation,
 } from "./editor-remote";
 import { PageCanvas, ObjectGraphic } from "./editor-canvas";
+import { ExistingTextEditor, webViewerConfigured } from "./editor-webviewer";
 import { SignatureDialog, readImage } from "./editor-signature";
 import {
   readDocument,
@@ -28,7 +29,6 @@ import {
   safeUrl,
   type EditorObject,
   type EditorState,
-  type Field,
   type ExistingAnnotation,
   type Kind,
 } from "../../../packages/pdf-editor/model";
@@ -53,7 +53,6 @@ export function PdfEditor() {
   const [state, setState] = useState<EditorState>(empty),
     [sources, setSources] = useState<Uint8Array[]>([]),
     [docs, setDocs] = useState<any[]>([]),
-    [fields, setFields] = useState<Field[]>([]),
     [name, setName] = useState("edited-document.pdf"),
     [originalName, setOriginalName] = useState(""),
     [pageIndex, setPageIndex] = useState(0),
@@ -77,6 +76,13 @@ export function PdfEditor() {
     [showLimits, setShowLimits] = useState(false),
     [historyCount, setHistoryCount] = useState(0),
     [redoCount, setRedoCount] = useState(0);
+  const [nativeSession, setNativeSession] = useState<{
+    bytes: Uint8Array;
+    snapshot: EditorState;
+  } | null>(null);
+  const fields = state.fields || [];
+  const nativeActive = useRef(false);
+  nativeActive.current = !!nativeSession;
   const history = useRef<EditorState[]>([]),
     future = useRef<EditorState[]>([]),
     saved = useRef(empty),
@@ -157,7 +163,7 @@ export function PdfEditor() {
   );
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
-      if (current.current !== saved.current) {
+      if (current.current !== saved.current || nativeActive.current) {
         e.preventDefault();
         e.returnValue = "";
       }
@@ -166,7 +172,7 @@ export function PdfEditor() {
       const a = (e.target as HTMLElement).closest("a");
       if (
         a &&
-        current.current !== saved.current &&
+        (current.current !== saved.current || nativeActive.current) &&
         !window.confirm("Discard unsaved PDF changes and leave the editor?")
       ) {
         e.preventDefault();
@@ -182,7 +188,7 @@ export function PdfEditor() {
   }, []);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
-      if (busy) return;
+      if (busy || nativeActive.current) return;
       if (
         (e.target as HTMLElement).closest(
           "input,textarea,select,[contenteditable]",
@@ -258,9 +264,9 @@ export function PdfEditor() {
       docRefs.current = [d];
       setDocs([d]);
       setSources([bytes]);
-      setFields(info.fields);
       const s = {
         ...empty,
+        fields: info.fields,
         pages: info.pages,
         values: Object.fromEntries(info.fields.map((f) => [f.name, f.value])),
       };
@@ -682,9 +688,9 @@ export function PdfEditor() {
       docRefs.current.push(doc);
       setDocs([...docs, doc]);
       setSources([...sources, bytes]);
-      setFields(info.fields);
       commit({
         baseSource: source,
+        fields: info.fields,
         pages: info.pages,
         objects: [],
         values: Object.fromEntries(info.fields.map((f) => [f.name, f.value])),
@@ -701,6 +707,49 @@ export function PdfEditor() {
     } finally {
       setBusy(false);
     }
+  }
+  async function openExistingText() {
+    if (busy) return;
+    const snapshot = state;
+    setBusy(true);
+    setError("");
+    try {
+      const bytes = await exportEditor(sources, snapshot, false);
+      assertCurrentSnapshot(snapshot, current.current);
+      setNativeSession({ bytes, snapshot });
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not prepare document.");
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function applyExistingText(bytes: Uint8Array) {
+    if (!nativeSession) return;
+    assertCurrentSnapshot(nativeSession.snapshot, current.current);
+    const source = sources.length,
+      info = await readDocument(bytes, source, uid());
+    const doc = await openPdf(bytes);
+    if (current.current !== nativeSession.snapshot) {
+      await doc.destroy();
+      assertCurrentSnapshot(nativeSession.snapshot, current.current);
+    }
+    docRefs.current.push(doc);
+    setSources([...sources, bytes]);
+    setDocs([...docs, doc]);
+    commit({
+      baseSource: source,
+      fields: info.fields,
+      pages: info.pages,
+      objects: [],
+      values: Object.fromEntries(info.fields.map((f) => [f.name, f.value])),
+      removed: [],
+    });
+    setPageIndex((i) => Math.min(i, info.pages.length - 1));
+    setSelected("");
+    setNativeSession(null);
+    setNotice(
+      "Content editor PDF returned and validated. Review it, then download. Undo restores your previous workspace.",
+    );
   }
   const onContent = useCallback((t: any[], a: ExistingAnnotation[]) => {
     setTexts(t);
@@ -728,6 +777,15 @@ export function PdfEditor() {
       "Annotation removed from export. Apply changes to refresh the original PDF appearance.",
     );
   }
+  if (nativeSession)
+    return (
+      <ExistingTextEditor
+        bytes={nativeSession.bytes}
+        filename={originalName}
+        onApply={applyExistingText}
+        onClose={() => setNativeSession(null)}
+      />
+    );
   return (
     <main id="main" className="pe-editor">
       <header className="pe-heading">
@@ -769,16 +827,16 @@ export function PdfEditor() {
           <h2>What this editor can change</h2>
           <p>
             Added text and images are editable. Existing interactive forms can
-            be filled. Original page text and images cannot be rewritten by the
-            current engine. Embedded subsets, missing fonts and complex layouts
-            require a dedicated content-editing engine; overlay text is not a
-            substitute.
+            be filled. Use Edit existing text for the optional licensed browser
+            editor. Embedded subsets, missing fonts and complex layouts can
+            limit accurate text replacement. Add Text does not replace original
+            page text.
           </p>
           <p>
-            Existing-text/image editing and OCR require the optional licensed
-            service. A licensed content-editing/OCR engine and processing
-            service must be connected before those features can be used. No
-            documents are sent to an external service here.
+            Existing text/image editing can use the licensed browser editor
+            without a VPS. OCR and optional server processing have separate
+            requirements. No document is sent to a processing server without
+            consent.
           </p>
           <p>
             Built-in added-text fonts support Latin/WinAnsi characters. Newlines
@@ -850,6 +908,9 @@ export function PdfEditor() {
             </button>
           </div>
           <div className="pe-toolbar" aria-label="Editor toolbar">
+            <button disabled={busy} onClick={openExistingText}>
+              Edit existing text
+            </button>
             {tools.map(([t, label]) => (
               <button
                 key={t}
@@ -862,9 +923,11 @@ export function PdfEditor() {
             ))}
           </div>
           <div className="pe-notice pe-compact">
-            {editorApi
-              ? "Licensed text/image editing and OCR depend on the connected service. Open Existing content & OCR for status."
-              : "Original text/image editing is not connected. Add text creates new content."}{" "}
+            {webViewerConfigured
+              ? "Browser content editor configured. Use Edit existing text; OCR availability is separate."
+              : editorApi
+                ? "Licensed text/image editing and OCR depend on the connected service. Open Existing content & OCR for status."
+                : "Existing-text editing awaits license activation. Add text creates new content."}{" "}
             <button onClick={() => setShowLimits((v) => !v)}>
               Details & OCR
             </button>

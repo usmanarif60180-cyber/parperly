@@ -30,7 +30,7 @@ Original annotations removed/replaced in the editor remain visible in the base c
 - `ContentReplacer.addImage(rect, image.getSDFObj())` replaces the image best matching the selected region. It does not edit vector drawings as images.
 - `PDFNet.OCRModule.processPDF(doc)` requires the separately installed/licensed OCR resources. `isModuleAvailable()` gates OCR availability.
 
-A WebViewer-only license does not establish entitlement to the Server SDK. Confirm license scope with Apryse. A client-only WebViewer license integration would have a different architecture; it is not installed here because the requested license secrecy requires server-side processing.
+A WebViewer-only license does not establish entitlement to the Server SDK. Confirm license scope with Apryse. The optional browser-based WebViewer integration is described below; it requires a separate browser-distributable license and explicit approval for client delivery. Server SDK secrets remain server-side.
 
 The browser reads only `NEXT_PUBLIC_EDITOR_API_URL`, never an SDK key. The optional panel checks capabilities, requires sign-in and explicit upload consent, and posts the current PDF to `/v1/editor`. The service verifies Firebase ID tokens and verified email, restricts origins, caps request size/rate/concurrency, and runs native processing in a disposable child with a 120-second deadline. Inputs/outputs are not persisted or logged by this service. It validates the resulting PDF before returning it. Undo restores the pre-server-edit workspace; returned content becomes the new PDF source.
 
@@ -51,3 +51,21 @@ Automated tests reopen exports and check page order/dimensions, text/image conte
 Browser QA uses synthetic PDFs: text formatting and dragging, undo/redo, real form controls, applying/exporting and independent pypdf extraction of the downloaded PDF. Poppler renders are reviewed for coordinate/layout correctness. Additional browser checks cover signatures and page operations. No customer files are used in automated tests.
 
 References: [pdf-lib limitations](https://github.com/Hopding/pdf-lib#limitations), [Apryse Node Server SDK](https://docs.apryse.com/core/get-started/frameworks/nodejs), [Apryse content replacement](https://docs.apryse.com/core/guides/features/edit/replace/php), [Sejda functional reference](https://www.sejda.com/pdf-editor).
+
+## Browser-based original-content editing (2026-11-26)
+
+The **Edit existing text** entry opens a separate WebViewer workspace with `@pdftron/webviewer` pinned to **12.3.0**. The implementation enables `UI.Feature.ContentEdit`, starts `ContentEditManager` on the current exported PDF, and commits the active editing session before obtaining actual PDF bytes using `getFileData` with exported XFDF. It reopens and validates the result before adding it as an undoable source snapshot. Forms metadata now belongs to each history snapshot, so undoing a content-engine result also restores the correct form controls. Embedded document JavaScript is disabled.
+
+**Production activation is pending.** A license string alone does not prove Content Editing entitlement. No keys have been configured, no license entitlement has been verified, and production content editing must not be described as working until a licensed text replacement/export/reopen test passes. The ordinary editor remains available.
+
+A WebViewer browser license is necessarily delivered to clients. It cannot be kept secret by storing it as a GitHub secret or returning it from an endpoint. Never use an Apryse Server SDK secret/API key here. Obtain an explicitly browser-distributable license, licensed for Content Editing and the production domain, and obtain owner approval for its client delivery. If the license must remain secret, keep the server architecture instead.
+
+After that approval, configure GitHub secret `APRYSE_WEBVIEWER_BROWSER_LICENSE` and repository variables `APRYSE_CONTENT_EDIT_ENABLED=true`, `APRYSE_BROWSER_LICENSE_APPROVED=true`. The workflow maps the license into its browser configuration. Assets are self-hosted and copied only when activation is explicitly enabled; the build fails if activation has no key or no approval flag. No Apryse CDN document upload is implemented. Never print the license in logs or add it to Git.
+
+For local vendor evaluation only, the SDK package documents a limited no-key trial. `NEXT_PUBLIC_APRYSE_LOCAL_TRIAL=true npm run dev` copies assets and permits that evaluation only on localhost/127.0.0.1. It is explicitly labelled as a trial and may watermark output. The public workflow never sets this flag. Trial success is not production license validation.
+
+Validation includes bridge tests (commit ordering, annotations, real PDF reopening, failure handling), browser-mode gating tests, and the existing PDF editor suite. These contract tests do not establish that a commercial license is valid. Reference: [Apryse Content Editing](https://apryse.com/blog/search-and-replace-pdf-webviewer), [ContentEditManager API](https://sdk.apryse.com/api/web/Core.ContentEditManager.html).
+
+Local trial browser verification: replaced the synthetic fixture's original `Original page one` string with `Parperly revised text`, applied, downloaded and reopened with independent pypdf extraction. The original string was absent, replacement text was present (wrapped within the original box), the effective font remained Helvetica 16 pt, and both pages plus all four AcroForm fields survived. The trial watermark is expected. Undo/redo restored the prior form controls. This validates the local trial integration, not a production license.
+
+Follow-up browser QA verified reopening the workspace repeatedly and rejecting Apply when no content changed. Content-edit placeholder annotations are excluded from dirty tracking. A keyboard-by-keyboard replacement to `abc` was downloaded and independently re-extracted with both pages and four fields intact. Bulk synthetic input/paste produced a DOM-versus-export mismatch during automation, so that input path is not claimed validated; the successful keyboard test is the supported evidence.

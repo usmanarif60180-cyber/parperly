@@ -71,6 +71,7 @@ export type ExistingAnnotation = {
   target?: string;
 };
 export type EditorState = {
+  fields?: Field[];
   baseSource?: number;
   pages: EditorPage[];
   objects: EditorObject[];
