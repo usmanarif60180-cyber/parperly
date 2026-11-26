@@ -228,6 +228,7 @@ export async function exportEditor(
   flatten = false,
 ): Promise<Uint8Array> {
   if (!state.pages.length) throw Error("Keep at least one page.");
+  if (state.pages.length > 300) throw Error("Maximum 300 pages.");
   const baseSource = state.baseSource ?? 0;
   const doc = await PDFDocument.load(sources[baseSource]);
   const originals = doc.getPages();

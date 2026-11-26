@@ -138,6 +138,7 @@ export function PdfEditor() {
     history.current.push(current.current);
     current.current = p;
     setState(p);
+    setPageIndex((i) => Math.max(0, Math.min(i, p.pages.length - 1)));
     setHistoryCount(history.current.length);
     setRedoCount(future.current.length);
     setOutput(null);
@@ -576,6 +577,10 @@ export function PdfEditor() {
     }
   }
   function blank(landscape: boolean) {
+    if (state.pages.length >= 300) {
+      setError("Maximum 300 pages.");
+      return;
+    }
     const p = {
       id: uid(),
       source: -1,
@@ -868,10 +873,16 @@ export function PdfEditor() {
               <aside className="pe-pages" aria-label="Page thumbnails">
                 <h2>Pages</h2>
                 <div className="pe-page-actions">
-                  <button disabled={busy} onClick={() => blank(false)}>
+                  <button
+                    disabled={busy || state.pages.length >= 300}
+                    onClick={() => blank(false)}
+                  >
                     Blank portrait
                   </button>
-                  <button disabled={busy} onClick={() => blank(true)}>
+                  <button
+                    disabled={busy || state.pages.length >= 300}
+                    onClick={() => blank(true)}
+                  >
                     Blank landscape
                   </button>
                   <button

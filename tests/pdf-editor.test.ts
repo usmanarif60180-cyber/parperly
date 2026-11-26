@@ -344,3 +344,19 @@ test("preserves multi-select dropdown choices during unrelated edits", async () 
     "United Kingdom",
   ]);
 });
+
+test("rejects export beyond the supported 300-page workspace limit", async () => {
+  const doc = await PDFDocument.create();
+  doc.addPage([100, 100]);
+  const bytes = await doc.save();
+  const info = await readDocument(bytes);
+  const pages = Array.from({ length: 301 }, (_, i) => ({
+    ...info.pages[0],
+    source: -1,
+    id: `blank-${i}`,
+  }));
+  await assert.rejects(
+    exportEditor([bytes], { pages, objects: [], values: {}, removed: [] }),
+    /300 pages/,
+  );
+});
