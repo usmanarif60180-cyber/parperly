@@ -7,6 +7,9 @@ import {
   webViewerMode,
 } from "../../../packages/pdf-editor/webviewer";
 const key = process.env.NEXT_PUBLIC_APRYSE_WEBVIEWER_LICENSE_KEY || "";
+export const webViewerTrial =
+  process.env.NEXT_PUBLIC_APRYSE_EVALUATION === "true" ||
+  key.trim().startsWith("demo:");
 export const webViewerConfigured =
   process.env.NEXT_PUBLIC_APRYSE_CONTENT_EDIT_ENABLED === "true" &&
   !!key.trim();
@@ -35,6 +38,7 @@ export function ExistingTextEditor({
       key,
       process.env.NEXT_PUBLIC_APRYSE_LOCAL_TRIAL === "true",
       location.hostname,
+      webViewerTrial,
     );
     setMode(mode);
     if (mode === "unconfigured") {
@@ -60,7 +64,7 @@ export function ExistingTextEditor({
       const viewer = await WebViewer(
         {
           path: asset("webviewer"),
-          licenseKey: mode === "licensed" ? key : undefined,
+          licenseKey: key.trim() || undefined,
           fullAPI: true,
           enableFilePicker: false,
           disabledElements: [
@@ -208,6 +212,15 @@ export function ExistingTextEditor({
             <strong>
               Local evaluation only. Trial output may carry a watermark; this is
               not a production license.
+            </strong>
+          </p>
+        )}
+        {mode === "public-trial" && (
+          <p>
+            <strong>
+              Trial PDF editor. Downloads may contain an Apryse watermark. Trial
+              access is temporary and may expire; this is not a paid production
+              license.
             </strong>
           </p>
         )}

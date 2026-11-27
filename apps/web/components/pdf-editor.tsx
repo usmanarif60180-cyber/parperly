@@ -11,7 +11,11 @@ import {
   type RemoteOperation,
 } from "./editor-remote";
 import { PageCanvas, ObjectGraphic } from "./editor-canvas";
-import { ExistingTextEditor, webViewerConfigured } from "./editor-webviewer";
+import {
+  ExistingTextEditor,
+  webViewerConfigured,
+  webViewerTrial,
+} from "./editor-webviewer";
 import { SignatureDialog, readImage } from "./editor-signature";
 import {
   readDocument,
@@ -924,7 +928,9 @@ export function PdfEditor() {
           </div>
           <div className="pe-notice pe-compact">
             {webViewerConfigured
-              ? "Browser content editor configured. Use Edit existing text; OCR availability is separate."
+              ? webViewerTrial
+                ? "Trial existing-text editor available. Downloads may be watermarked; trial access may expire."
+                : "Browser content editor configured. Use Edit existing text; OCR availability is separate."
               : editorApi
                 ? "Licensed text/image editing and OCR depend on the connected service. Open Existing content & OCR for status."
                 : "Existing-text editing awaits license activation. Add text creates new content."}{" "}

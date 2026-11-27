@@ -5,8 +5,12 @@ export function webViewerMode(
   key: string,
   trial: boolean,
   hostname: string,
+  evaluation = false,
 ) {
-  if (enabled && key.trim()) return "licensed";
+  if (enabled && key.trim())
+    return evaluation || key.trim().startsWith("demo:")
+      ? "public-trial"
+      : "licensed";
   if (trial && ["localhost", "127.0.0.1", "[::1]"].includes(hostname))
     return "local-trial";
   return "unconfigured";

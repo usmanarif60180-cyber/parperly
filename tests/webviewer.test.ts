@@ -86,3 +86,18 @@ test("SDK bridge does not return corrupt output or proceed after content commit 
     ({ endContentEditMode: async () => {} }) as any;
   await assert.rejects(collectWebViewerPdf(fake));
 });
+
+test("public evaluation is labelled trial and still requires explicit activation", () => {
+  assert.equal(
+    webViewerMode(true, "demo:test", false, "parperly.com"),
+    "public-trial",
+  );
+  assert.equal(
+    webViewerMode(true, "evaluation-key", false, "parperly.com", true),
+    "public-trial",
+  );
+  assert.equal(
+    webViewerMode(false, "demo:test", false, "parperly.com", true),
+    "unconfigured",
+  );
+});
