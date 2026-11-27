@@ -83,20 +83,14 @@ export async function readDocument(
       }
       const refs = f.acroField.getWidgets().map((w) => w.P()?.toString());
       const fieldPages = doc.getPages().flatMap((p, i) => {
-        const annots =
-          p.node
-            .Annots()
-            ?.asArray()
-            .map((a) => a.toString()) || [];
+        // Preserve complete references, including generation numbers. Do not
+        // rebuild references by parsing their display strings.
+        const annots = p.node.Annots()?.asArray() || [];
         return refs.includes(p.ref.toString()) ||
           f.acroField
             .getWidgets()
             .some((w) =>
-              annots.some(
-                (r) =>
-                  doc.context.lookup(PDFRef.of(Number(r.split(" ")[0]))) ===
-                  w.dict,
-              ),
+              annots.some((ref) => doc.context.lookup(ref) === w.dict),
             )
           ? [pages[i].id]
           : [];

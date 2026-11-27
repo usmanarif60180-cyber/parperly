@@ -7,6 +7,7 @@ import {
   PDFArray,
   PDFString,
   PDFHexString,
+  PDFRef,
   degrees,
 } from "pdf-lib";
 import {
@@ -376,4 +377,29 @@ test("stale async imports cannot replace a newer edit or undone state", async ()
     /latest edits were kept/,
   );
   assert.equal(newer.values.Name, "Latest edit");
+});
+
+test("finds form widgets without a page pointer at nonzero reference generations", async () => {
+  const { bytes } = await sample();
+  const d = await PDFDocument.load(bytes);
+  const field = d.getForm().getTextField("Name");
+  const kids = field.acroField.dict.lookup(n("Kids"), PDFArray);
+  const oldRef = kids.get(0) as PDFRef;
+  const widget = d.context.lookup(oldRef, PDFDict);
+  widget.delete(n("P"));
+  const newRef = PDFRef.of(oldRef.objectNumber, 7);
+  d.context.assign(newRef, widget);
+  d.context.delete(oldRef);
+  kids.set(0, newRef);
+  const annotations = d.getPage(0).node.Annots()!;
+  for (let i = 0; i < annotations.size(); i++)
+    if (annotations.get(i) === oldRef) annotations.set(i, newRef);
+  const updated = await readDocument(
+    await d.save({ useObjectStreams: false }),
+    0,
+    "generation",
+  );
+  assert.deepEqual(updated.fields.find((f) => f.name === "Name")?.pages, [
+    "generation-0",
+  ]);
 });

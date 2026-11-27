@@ -216,7 +216,7 @@ export function PdfEditor() {
     return () => window.removeEventListener("keydown", key);
   }, [selected, commit, busy]);
   useEffect(() => {
-    if (!page || !scroll.current || fit === "manual") return;
+    if (nativeSession || !page || !scroll.current || fit === "manual") return;
     const el = scroll.current;
     const calc = () => {
       const d = dimensions(page);
@@ -237,7 +237,7 @@ export function PdfEditor() {
     const r = new ResizeObserver(calc);
     r.observe(el);
     return () => r.disconnect();
-  }, [page?.id, page?.rotation, fit]);
+  }, [page?.id, page?.rotation, fit, nativeSession]);
   useEffect(() => {
     setSelected("");
     setTexts([]);
